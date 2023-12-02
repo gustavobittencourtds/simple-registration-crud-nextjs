@@ -12,13 +12,20 @@ export default function useCustomers() {
   const [customer, setCustomer] = useState<Customer>(Customer.empty())
   const [customers, setCustomers] = useState<Customer[]>([])
 
+  // const _ESLintUnderscore = "teste"; // ESLint - no-underscore-dangle
+  // const no_use_camelcase = "CamelCase não utilizado"; // ESLint - camelcase
 
-  useEffect(listAll, [])
+  // const uselessVariable = "variável sem utilização"; // ESLint - no-unused-vars
+
+  useEffect(listAll, []) // ESLint - exhaustive-deps - React
 
   function listAll() {
     repo.listAll().then(customers => {
       setCustomers(customers)
       showTable()
+
+      // console.log('Teste regra de consoles com ESLint'); // ESLint - no-console
+      // alert('Teste regra de Alerts com ESLint'); // ESLint - no-alert
     })
   }
 
