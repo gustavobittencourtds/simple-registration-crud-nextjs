@@ -45,7 +45,9 @@ export default function Table(props: TableProps) {
       <td className="flex justify-center ">
 
         { props.selectedCustomer ? (
-          <button className={`
+          <button
+            id="edit-customer"
+            className={`
             flex justify-center items-center
             text-green-600 rounded-full p-2 m-1
             hover:bg-purple-50
@@ -57,7 +59,9 @@ export default function Table(props: TableProps) {
         ): false }
         
         { props.deletedCustomer ? (
-          <button className={`
+          <button
+            id="delete-customer"
+            className={`
             flex justify-center items-center
             text-red-500 rounded-full p-2 m-1
             hover:bg-purple-50

@@ -16,13 +16,13 @@ export default function Form(props: FormProps) {
   const [age, setAge] = useState(props.customer?.age ?? 0) //usar o tipo da idade do cliente ou zero por padrão
 
   return (
-    <div>
+    <div data-testid="form-element">
       {id ? (
         <Input text="Código" value={id} readOnly className="mb-5" />
       ): false }
 
-      <Input text="Name" value={name} onValueChange={setName} className="mb-5" />
-      <Input text="Age" value={age} type="number" onValueChange={setAge}/>
+      <Input text="Name" value={name} onValueChange={setName} className="mb-5" data-testid="input-name" />
+      <Input text="Age" value={age} type="number" onValueChange={setAge} data-testid="input-age" />
 
       <div className="flex justify-end mt-7">
         <Button

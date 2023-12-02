@@ -1,7 +1,7 @@
 import Title from "./Title";
 
 interface LayoutProps {
-  title: string
+  title: string,
   children?: any
 }
 
