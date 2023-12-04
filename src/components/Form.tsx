@@ -21,14 +21,15 @@ export default function Form(props: FormProps) {
         <Input text="Código" value={id} readOnly className="mb-5" />
       ): false }
 
-      <Input text="Name" value={name} onValueChange={setName} className="mb-5" data-testid="input-name" />
-      <Input text="Age" value={age} type="number" onValueChange={setAge} data-testid="input-age" />
+      <Input text="Name" value={name} onValueChange={setName} className="mb-5" />
+      <Input text="Age" value={age} type="number" onValueChange={setAge} />
 
       <div className="flex justify-end mt-7">
         <Button
           color="blue"
           className="mr-2"
           onClick={()=> props.changedCustomer?.(new Customer(name, +age, id))}
+          disabled={name === '' ? true : false }
         >
           {id ? 'Alterar' : 'Salvar' }
         </Button>

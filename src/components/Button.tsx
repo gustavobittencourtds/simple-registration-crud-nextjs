@@ -3,6 +3,7 @@ interface ButtonProps {
   color?: 'green' | 'blue' | 'gray'
   className?: string
   onClick?: () => void
+  disabled?: boolean
 }
 
 export default function Button(props: ButtonProps) {
@@ -14,6 +15,7 @@ export default function Button(props: ButtonProps) {
       text-white px-4 py-2 rounded-md
       ${props.className} `}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.children}
     </button>

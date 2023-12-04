@@ -46,7 +46,7 @@ export default function Table(props: TableProps) {
 
         { props.selectedCustomer ? (
           <button
-            id="edit-customer"
+            data-testid="edit-customer"
             className={`
             flex justify-center items-center
             text-green-600 rounded-full p-2 m-1
@@ -60,7 +60,7 @@ export default function Table(props: TableProps) {
         
         { props.deletedCustomer ? (
           <button
-            id="delete-customer"
+            data-testid="delete-customer"
             className={`
             flex justify-center items-center
             text-red-500 rounded-full p-2 m-1
@@ -77,14 +77,16 @@ export default function Table(props: TableProps) {
   }
 
   return (
-    <table className="w-full rounded-xl overflow-hidden">
+    <table
+      data-testid="table-element"
+      className="w-full rounded-xl overflow-hidden">
       <thead className={`
         text-gray-100
         bg-gradient-to-r from-purple-500 to-purple-800
       `}>
         {renderTablesHeader()}
       </thead>
-      <tbody>
+      <tbody data-testid="tbody-element">
         {renderTableData()}
       </tbody>
     </table>

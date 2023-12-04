@@ -1,7 +1,7 @@
 interface InputProps {
   text: string
   type?: 'text' | 'number'
-  value: any
+  value: string | number
   readOnly?: boolean
   onValueChange?: (value: any) => void
   className?: string
@@ -10,10 +10,11 @@ interface InputProps {
 export default function Input(props: InputProps) {
   return (
     <div className={`flex flex-col ${props.className}`}>
-      <label className="mb-2">
+      <label className="mb-2" htmlFor={props.text}>
         {props.text}
       </label>
       <input
+        id={props.text}
         type={props.type ?? 'text'} 
         value={props.value}
         readOnly={props.readOnly}
