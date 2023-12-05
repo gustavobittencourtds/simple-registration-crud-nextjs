@@ -18,8 +18,8 @@ export default function Form(props: FormProps) {
   return (
     <div data-testid="form-element">
       {id ? (
-        <Input text="Código" value={id} readOnly className="mb-5" />
-      ): false }
+        <Input text="Codigo" value={id} readOnly className="mb-5" />
+      ) : false}
 
       <Input text="Name" value={name} onValueChange={setName} className="mb-5" />
       <Input text="Age" value={age} type="number" onValueChange={setAge} />
@@ -28,13 +28,15 @@ export default function Form(props: FormProps) {
         <Button
           color="blue"
           className="mr-2"
-          onClick={()=> props.changedCustomer?.(new Customer(name, +age, id))}
-          disabled={name === '' ? true : false }
+          buttonType={id ? 'update' : 'save'}
+          onClick={() => props.changedCustomer?.(new Customer(name, +age, id))}
+          disabled={name.trim() === ''}
         >
-          {id ? 'Alterar' : 'Salvar' }
+          {id ? 'Alterar' : 'Salvar'}
         </Button>
 
         <Button
+          buttonType={'cancel'}
           onClick={props.canceled}
           color="gray">
           Cancelar

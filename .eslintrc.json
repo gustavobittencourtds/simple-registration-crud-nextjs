@@ -1,6 +1,8 @@
 {
   "extends": [
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommend"
   ],
   "rules": {
     "no-console": "error",

@@ -17,7 +17,7 @@ const Home: NextPage = () => {
     isTableVisible,
     showTable
   } = useCustomers()
-  
+
   return (
     <div className={`
       flex justify-center items-center h-screen
@@ -25,11 +25,12 @@ const Home: NextPage = () => {
       text-white
     `}>
 
-      <Layout title='Simple Registration' >
-        {isTableVisible ?(
+      <Layout title={isTableVisible ? 'Simple Registration' : 'Register Customers'} >
+        {isTableVisible ? (
           <>
             <div className='flex justify-end'>
               <Button
+                buttonType='register'
                 className='mb-4'
                 color='blue'
                 onClick={newClient}
@@ -44,12 +45,12 @@ const Home: NextPage = () => {
               deletedCustomer={deleteCustomer}
             />
           </>
-        ): (
-            <Form
-              customer={customer}
-              canceled={showTable}
-              changedCustomer={saveCustomer}
-            />
+        ) : (
+          <Form
+            customer={customer}
+            canceled={showTable}
+            changedCustomer={saveCustomer}
+          />
         )}
       </Layout>
     </div>

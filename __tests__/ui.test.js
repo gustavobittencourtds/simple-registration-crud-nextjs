@@ -4,40 +4,9 @@ import '@testing-library/jest-dom';
 import Home from "../src/pages/index";
 import userEvent from "@testing-library/user-event";
 
-import useCustomers from "../src/hooks/useCustomers";
-import Customer from "../src/core/Customer";
-
 const renderComponent = () => {
   return render(<Home />);
 };
-
-const newClient = jest.fn();
-const selectCustomer = jest.fn();
-const deleteCustomer = jest.fn();
-const saveCustomer = jest.fn();
-const showTable = jest.fn();
-const customer = Customer;
-const customers = [];
-const isTableVisible = true;
-
-const constRenderForm = () => {
-  
-  <useCustomers.Provider value={{
-    customer,
-    customers,
-    newClient,
-    selectCustomer,
-    deleteCustomer,
-    saveCustomer,
-    isTableVisible,
-    showTable,
-  }}>
-  </useCustomers.Provider>
-
-  return render(
-    <Home />
-  )
-}
 
 describe("Home Component", () => {
   it("should render correctly", () => {
@@ -113,14 +82,23 @@ describe("Home Component", () => {
     });
   })
 
-  it("should render Form correctly", async () => {
+  it("should render Form and Table correctly", async () => {
 
-    constRenderForm()
+    renderComponent();
 
+    // Valida se o form não está presente quando a tabela estiver visivel
+    const formElement = screen.queryByTestId("form-element");
+    expect(formElement).toBeNull();
+
+    // Clique no botão "New Client"
     const buttonNewClient = screen.getByText("New Client");
     fireEvent.click(buttonNewClient);
 
-    expect(isTableVisible)
+    // Valida se o form não está presente quando a tabela estiver visivel
+    const tableElement = screen.queryByTestId("table-element");
+    expect(tableElement).toBeNull();
+
+
   });
 
   

@@ -15,7 +15,8 @@ export default function Input(props: InputProps) {
       </label>
       <input
         id={props.text}
-        type={props.type ?? 'text'} 
+        data-testid={props.text.toLowerCase()}
+        type={props.type ?? 'text'}
         value={props.value}
         readOnly={props.readOnly}
         onChange={e => props.onValueChange?.(e.target.value)}

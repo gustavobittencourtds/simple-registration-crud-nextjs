@@ -46,7 +46,7 @@ export default function Table(props: TableProps) {
 
         { props.selectedCustomer ? (
           <button
-            data-testid="edit-customer"
+            data-testid="edit-button"
             className={`
             flex justify-center items-center
             text-green-600 rounded-full p-2 m-1
@@ -60,7 +60,7 @@ export default function Table(props: TableProps) {
         
         { props.deletedCustomer ? (
           <button
-            data-testid="delete-customer"
+            data-testid="delete-button"
             className={`
             flex justify-center items-center
             text-red-500 rounded-full p-2 m-1
