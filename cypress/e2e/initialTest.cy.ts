@@ -1,22 +1,18 @@
-const pagePath = 'http://localhost:3000/';
-const layoutTitle = '[data-testid="layout-title"]';
-const registerButton = '[data-testid="register-button"]';
-
 describe('validate renderings', () => {
 
   it('should render table vision at first moment', () => {
-    cy.visit(pagePath);
-    cy.get(layoutTitle).should('exist').should('have.text', 'Simple Registration');
+    cy.visit('http://localhost:3000/');
+    cy.get('[data-testid="layout-title"]').should('exist').should('have.text', 'Simple Registration');
     
-    cy.get(registerButton).should('exist');
+    cy.get('[data-testid="register-button"]').should('exist');
   })
 
   it('should render register form after click New Client button', () => {
-    cy.visit(pagePath);
+    cy.visit('http://localhost:3000/');
 
-    cy.get(registerButton).click();
+    cy.get('[data-testid="register-button"]').click();
 
-    cy.get(layoutTitle).should('exist').should('have.text', 'Register Customers');
+    cy.get('[data-testid="layout-title"]').should('exist').should('have.text', 'Register Customers');
 
     cy.get('[data-testid="name"]').should('exist')
     cy.get('[data-testid="age"]').should('exist')
@@ -24,8 +20,8 @@ describe('validate renderings', () => {
   })
 
   it('should disabled save button when name field is empty', () => {
-    cy.visit(pagePath);
-    cy.get(registerButton).click();
+    cy.visit('http://localhost:3000/');
+    cy.get('[data-testid="register-button"]').click();
 
     cy.get('[data-testid="save-button"]').should('be.disabled');
 
@@ -35,8 +31,8 @@ describe('validate renderings', () => {
   });
 
   it('should enabled save button when name field is not empty - save new user', () => {
-    cy.visit(pagePath);
-    cy.get(registerButton).click();
+    cy.visit('http://localhost:3000/');
+    cy.get('[data-testid="register-button"]').click();
 
     cy.get('[data-testid="save-button"]').should('be.disabled');
 
@@ -53,20 +49,23 @@ describe('validate renderings', () => {
 
 describe('Validate Actions on Table', () => {
 
-  it('call delete function - when users exists', () => {
-    cy.visit(pagePath);
+  it('call delete/update function - when users exists', () => {
+    cy.visit('http://localhost:3000/');
     cy.get('[data-testid="delete-button"]').should('exist');
     cy.get('[data-testid="delete-button"]').first().click();
   })
 
   it('call update function - when users exists', () => {
-    cy.visit(pagePath);
-    cy.get('[data-testid="edit-button"]').should('exist');
-    cy.get('[data-testid="edit-button"]').clear().first().click();
+    cy.visit('http://localhost:3000/');
 
-    cy.get('[data-testid="name"]').type('Nome alterado', { force: true });
+    cy.get('[data-testid="edit-button"]').should('exist');
+    cy.get('[data-testid="edit-button"]').first().click();
+
+    cy.get('[data-testid="name"]').clear().type('Nome alterado', { force: true });
 
     cy.get('[data-testid="update-button"]').click();
   })
 
 })
+
+export {}
