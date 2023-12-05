@@ -49,7 +49,7 @@ describe('validate renderings', () => {
 
 describe('Validate Actions on Table', () => {
 
-  it('call delete/update function - when users exists', () => {
+  it('call delete function - when users exists', () => {
     cy.visit('http://localhost:3000/');
     cy.get('[data-testid="delete-button"]').should('exist');
     cy.get('[data-testid="delete-button"]').first().click();

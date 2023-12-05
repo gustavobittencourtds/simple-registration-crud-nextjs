@@ -1,34 +1,106 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Documentação de Testes
 
-## Getting Started
+Este documento descreve os testes realizados para a aplicação. Os testes estão divididos entre Jest e Cypress, abordando diferentes aspectos da aplicação, incluindo renderização, interação do usuário, validação de botões e funcionalidades específicas.
 
-First, run the development server:
+Para executar os testes: `npm run test`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Cypress
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Validação da Renderização Inicial
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### Teste: Deve Renderizar a Visão da Tabela no Primeiro momento de acesso
+- **Entrada:** Acesso à aplicação pelo endereço `http://localhost:3000/`
+- **Saída Esperada:** 
+  - Título do layout existente e igual a 'Simple Registration'
+  - Botão de registro existente
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 2. Validação do Formulário de Registro
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### Teste: Deve Renderizar o Formulário de Registro Após Clicar no Botão "New Client"
+- **Entrada:** Acesso à aplicação pelo endereço `http://localhost:3000/`
+- **Saída Esperada:** 
+  - Título do layout existente e igual a 'Register Customers'
+  - Campos de nome e idade existentes no formulário
 
-## Learn More
+#### Teste: Deve Desabilitar o Botão "Salvar" Quando o Campo de Nome Estiver Vazio
+- **Entrada:** Acesso à aplicação pelo endereço `http://localhost:3000/` e clicar no botão "New Client"
+- **Saída Esperada:** O botão "Salvar" deve estar desabilitado inicialmente e permanecer desabilitado após apagar o conteúdo do campo de nome
 
-To learn more about Next.js, take a look at the following resources:
+#### Teste: Deve Habilitar o Botão "Salvar" Quando o Campo de Nome Não Estiver Vazio
+- **Entrada:** Renderizar o componente `<Home />` e clicar no botão "New Client"
+- **Saída Esperada:** 
+  - O botão "Salvar" deve estar desabilitado inicialmente
+  - O botão "Salvar" deve ficar habilitado após preencher o campo de nome
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Validação das Ações na Tabela
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Teste: Chamar a Função de Exclusão Quando Houver ao menos um Usuário Cadastrado
+- **Entrada:** Acesso à aplicação pelo endereço `http://localhost:3000/`
+- **Saída Esperada:** 
+  - Botão de exclusão existente e clicar no primeiro botão de exclusão
+  - Botão de edição existente e clicar no primeiro botão de edição
 
-## Deploy on Vercel
+#### Teste: Chamar a Função de Atualização Quando Houver ao menos um Usuário Cadastrado
+- **Entrada:** Acesso à aplicação pelo endereço `http://localhost:3000/` e clicar no botão de edição do primeiro usuário
+- **Saída Esperada:** 
+  - O campo de nome deve estar vazio inicialmente
+  - Após preencher o campo de nome e clicar no botão de atualização, o nome inserido na alteração deve ser exibido na tabela
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Jest
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 1. Visão da Tabela
+
+#### Teste: Renderizar a Tabela com Clientes
+- **Entrada:** Renderizar o componente `<Table />` com clientes 3 fictícios
+- **Saída Esperada:** 
+  - A tabela deve estar presente no documento
+  - O número de linhas da tabela deve ser igual a 4 (cabeçalho + 3 clientes)
+
+#### Teste: Renderizar a Tabela Sem Clientes
+- **Entrada:** Renderizar o componente `<Table />` sem clientes
+- **Saída Esperada:** 
+  - A tabela deve estar presente no documento
+  - O número de linhas da tabela deve ser igual a 1 (apenas cabeçalho)
+
+#### Teste: Chamar a Função de Exclusão Quando o Botão de Exclusão For Clicado
+- **Entrada:** Renderizar o componente `<Table />` com clientes fictícios e clicar no botão de exclusão do primeiro cliente
+- **Saída Esperada:** A função `mockDeleteCustomer` deve ser chamada uma vez (executa função Delete do componente)
+
+#### Teste: Chamar a Função de Atualização Quando o Botão de Edição For Clicado
+- **Entrada:** Renderizar o componente `<Table />` com clientes fictícios e clicar no botão de edição do primeiro cliente
+- **Saída Esperada:** A função `mockSelectedCustomer` deve ser chamada uma vez (executa função Update do componente)
+
+### 2. Visão da Formulário
+
+#### Teste: Retornar Dados do Cliente Quando a Função de Atualização For Chamada
+- **Entrada:** Renderizar o componente `<Form />` com um cliente fictício - Mock utilizado
+- **Saída Esperada:** 
+  - O campo de ID deve ter o valor "1"
+  - O campo de nome deve ter o valor "Gustavo Bittencourt"
+  - O campo de idade deve ter o valor "26"
+
+#### Teste: Chamar a Função de Novo Cliente Quando o Botão de Registro For Clicado
+- **Entrada:** Renderizar o componente `<Button />` com o tipo "register" e clicar no botão de registro
+- **Saída Esperada:** A função `mockNewCustomer` deve ser chamada uma vez (executa função de Cadastro do componente)
+
+### 3. Página Inicial - Abordagem de navegação pelos componentes (UserEvents)
+
+#### Teste: Renderizar o Componente `<Home />` Corretamente
+- **Entrada:** Renderizar o componente `<Home />`
+- **Saída Esperada:** A renderização deve ocorrer sem erros
+
+#### Teste: Renderizar Formulário com Campos de Nome e Idade e Botões
+- **Entrada:** Renderizar o componente `<Home />` e clicar no botão "New Client"
+- **Saída Esperada:** 
+  - O formulário deve estar presente
+  - Os botões "Salvar" e "Cancelar" devem estar presentes no formulário
+
+#### Teste: Desabilitar o Botão "Salvar" Quando o Campo de Nome Estiver Vazio
+- **Entrada:** Renderizar o componente `<Home />` e clicar no botão "New Client"
+- **Saída Esperada:** O botão "Salvar" deve estar desabilitado inicialmente e permanecer desabilitado após apagar o conteúdo do campo de nome
+
+#### Teste: Habilitar o Botão "Salvar" Quando o Campo de Nome Não Estiver Vazio
+- **Entrada:** Renderizar o componente `<Home />` e clicar no botão "New Client"
+- **Saída Esperada:** 
+  - O botão "Salvar" deve estar desabilitado inicialmente
+  - O botão "Salvar" deve ficar habilitado após preencher o campo de nome
